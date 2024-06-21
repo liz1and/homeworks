@@ -9,13 +9,9 @@ public class TV {
 
     private int volume;
 
-    //public TV() {
-        //this.state = false;
-    //}
+    public TV() { this.state = false;}
 
-    //public TV(boolean state) {
-      //  this.state = state;
-   // }
+    public TV(boolean state) { this.state = state;}
 
     public TV(boolean state, int channel, int volume) {
         this.state = state;
