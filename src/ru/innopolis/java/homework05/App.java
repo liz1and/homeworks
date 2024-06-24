@@ -1,12 +1,11 @@
 package ru.innopolis.java.homework05;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        TV [] tvs = new TV[4];
+        TV [] tvs = new TV[10];
         for (int i = 0; i < tvs.length; i++){
             System.out.print("Включить телевизор? (1 - да, 2 - нет) : ");
             int choice = sc.nextInt();
