@@ -7,15 +7,25 @@ public class Product {
     private int productPrice;
 
     public Product(String productName, int productPrice) {
-        setProductName(productName);
-        setProductPrice(productPrice);
+        if (productName == null || productName.isEmpty()){
+            throw new NullPointerException("Имя не может быть пустым");
+        }
+        else {
+            this.productName = productName;
+        }
+        if (productPrice < 0){
+            throw new IllegalArgumentException("Цена не может быть отрицательной");
+        }
+        else {
+            this.productPrice = productPrice;
+        }
     }
     public String getProductName() {
         return productName;
     }
 
     public void setProductName(String productName) {
-        if (productName == null || productName.equals("")){
+        if (productName == null || productName.isEmpty()){
             throw new NullPointerException("Имя не может быть пустым");
         }
         else {
@@ -49,9 +59,6 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" +
-                "productName='" + productName + '\'' +
-                ", productPrice=" + productPrice +
-                '}';
+        return productName;
     }
 }

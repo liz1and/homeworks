@@ -2,17 +2,26 @@ package ru.innopolis.java.homework06;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class Person {
     private String name;
     private int money;
-    private ArrayList<Product> pack;
+    private List<Product> pack;
 
     public Person(String name, int money) {
-        setName(name);
-        setMoney(money);
-        this.pack = new ArrayList<Product>();
+        if (Objects.isNull(name)) {
+            throw new NullPointerException("Name cannot be null");
+        } else {
+            this.name = name;
+        }
+        if (money < 0) {
+            throw new IllegalArgumentException("Деньги не могут быть отрицательными");
+        } else {
+            this.money = money;
+        }
+        this.pack = new ArrayList<>();
     }
 
     public void setMoney(int money) {
@@ -39,26 +48,24 @@ public class Person {
         return name;
     }
 
-    public void setPack(ArrayList<Product> pack) {
+    public void setPack(List<Product> pack) {
         this.pack = pack;
     }
 
-    public ArrayList<Product> getPack() {
+    public List<Product> getPack() {
         return this.pack;
     }
 
-    public String getStringPack() {
-        String s = "";
-        if (Objects.isNull(pack) || (pack.toArray().length <= 0)) {
-            return "Ничего не куплено";
-        } else {
-            for (Product p : pack) {
-                s += p.getProductName() + ", ";
-            }
-            return s.substring(0, s.length() - 2);
+    public boolean addProductToPack(Product product) {
+        if (this.getMoney() >= product.getProductPrice()){
+            this.pack.add(product);
+            this.setMoney(this.getMoney() - product.getProductPrice());
+            return true;
+        }
+        else{
+            return false;
         }
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -75,6 +82,15 @@ public class Person {
 
     @Override
     public String toString() {
-        return name + " - " +  getStringPack();
+        StringBuilder s = new StringBuilder();
+        s.append(this.name);
+        s.append(" - ");
+        if (pack.isEmpty()) {
+            s.append("Ничего не куплено");
+        }
+        else {
+            s.append(pack.toString(), 1, pack.toString().length() - 1);
+        }
+        return s.toString();
     }
 }
