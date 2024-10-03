@@ -9,6 +9,7 @@ import java.util.Map;
 public interface PersonRepository {
 
     Person getPersonFromString (String s);
+    Person getPersonFromFileString (String s);
     Map<String, Person> loadPersonDataFromFile(File file) throws IOException;
     void savePersonData(Person person) throws IOException;
 }

@@ -27,10 +27,34 @@ public class PersonRepositoryImpl implements PersonRepository {
         String birthDateStr = data[3];
         long phoneNumber = Long.parseLong(data[4]);
         char gender = data[5].charAt(0);
-        int age = Integer.parseInt(data[6]);
+        LocalDate birthDate = PersonRepositoryImpl.parseDate(birthDateStr);
+        Person p = new Person(lastName, firstName, middleName, birthDate, phoneNumber, gender);
+        try {
+            int age = Integer.parseInt(data[6]);
+            p.setAge(age);
+        }
+        catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Возраст должен быть целым числом!");
+        }
+        return p;
+    }
+
+    @Override
+    public Person getPersonFromFileString (String s) {
+        s = s.substring( 1, s.length() - 1 );
+        String[] data = s.split("><");
+        if (data.length != 6) {
+            throw new IllegalArgumentException("Некорректный ввод данных!");
+        }
+        String lastName = data[0];
+        String firstName = data[1];
+        String middleName = data[2];
+        String birthDateStr = data[3];
+        long phoneNumber = Long.parseLong(data[4]);
+        char gender = data[5].charAt(0);
 
         LocalDate birthDate = PersonRepositoryImpl.parseDate(birthDateStr);
-        return new Person(lastName, firstName, middleName, birthDate, phoneNumber, gender, age);
+        return new Person(lastName, firstName, middleName, birthDate, phoneNumber, gender);
     }
 
     @Override
@@ -40,7 +64,7 @@ public class PersonRepositoryImpl implements PersonRepository {
             try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    Person person = getPersonFromString(line);
+                    Person person = getPersonFromFileString(line);
                     personMap.put(person.getLastName() + person.getFirstName() + person.getMiddleName(), person);
                 }
             }
