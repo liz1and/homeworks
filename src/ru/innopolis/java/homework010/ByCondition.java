@@ -1,16 +1,9 @@
 package ru.innopolis.java.homework010;
 
-import java.util.function.IntPredicate;
-
 @FunctionalInterface
-public interface ByCondition extends IntPredicate {
+public interface ByCondition  {
 
     boolean isOk(int number);
-
-    @Override
-    default boolean test(int value) {
-        return false;
-    }
 
     static ByCondition isEven() {
         return n -> n % 2 == 0;
