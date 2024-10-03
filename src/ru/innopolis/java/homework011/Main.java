@@ -4,40 +4,49 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
         List<Car> cars = new ArrayList<>();
         CarsRepositoryImpl carsRepository = new CarsRepositoryImpl();
 
-        //ввод машин
-        System.out.println("Введите автомобили");
-        String carData;
-        do {
-            carData = sc.nextLine();
-            if (!carData.isEmpty()) {
-                cars.add(CarsRepositoryImpl.parseCar().apply(carData));
-            }
-        } while (!carData.isEmpty());
+        List<String> carData = Arrays.asList("a123me|Mercedes|White|0|8300000"
+                ,"b873of|Volga|Black|0|673000"
+                ,"w487mn|Lexus|Grey|76000|900000"
+                ,"p987hj|Volga|Red|610|704340"
+                ,"c987ss|Toyota|White|254000|761000"
+                ,"o983op|Toyota|Black|698000|740000"
+                ,"p146op|BMW|White|271000|850000"
+                ,"u893ii|Toyota|Purple|210900|440000"
+                ,"l097df|Toyota|Black|108000|780000"
+                ,"y876wd|Toyota|Black|160000|1000000");
+
+        for (String data : carData) {
+            cars.add(carsRepository.parseCar().apply(data));
+        }
+
 
         System.out.println("Введите цвет или пробег, для которых вывести номера автомобилей");
-        String s = sc.nextLine();
+        String s = "Black, 0";
+        System.out.println(s);
         String colorToFind = s.split(", ")[0];
         String mileageToFind = s.split(", ")[1];
-        String [] res = carsRepository.numbersByColorAndMileage(cars, colorToFind, mileageToFind);
+        List <String> res = carsRepository.numbersByColorAndMileage(cars, colorToFind, mileageToFind);
 
         System.out.println("Введите диапазон цен на автомобили, которые нужно вывести");
-        s = sc.nextLine();
+        s = "700000, 800000";
+        System.out.println(s);
         int startCost = Integer.parseInt(s.split(", ")[0]);
         int endCost = Integer.parseInt(s.split(", ")[1]);
-        int count = carsRepository.distinctCarsByCost(cars, startCost, endCost);
+        long count = carsRepository.distinctCarsByCost(cars, startCost, endCost);
 
         String colorOfCheapestCar = carsRepository.colorCarWithMinCost(cars);
 
         System.out.println("Введите искомую модель, для которой вывести среднюю стоимость");
-        String modelToFind = sc.nextLine();
+        String modelToFind = "Toyota";
+        System.out.println(modelToFind);
         OptionalDouble avgCost = carsRepository.avgCostByModel(cars, modelToFind);
 
         System.out.println("Введите искомую модель, для которой вывести среднюю стоимость");
-        String modelToFind2 = sc.nextLine();
+        String modelToFind2 = "Volvo";
+        System.out.println(modelToFind2);
         OptionalDouble avgCost2 = carsRepository.avgCostByModel(cars, modelToFind2);
 
         System.out.println();

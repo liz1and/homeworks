@@ -1,15 +1,13 @@
 package ru.innopolis.java.homework011;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.OptionalDouble;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class CarsRepositoryImpl implements CarsRepository {
 
-    public static Function<String, Car> parseCar() {
+    @Override
+    public Function<String, Car> parseCar() {
         return carString -> {
             String[] parts = carString.trim().split("\\|");
             if (parts.length == 5) {
@@ -31,20 +29,16 @@ public class CarsRepositoryImpl implements CarsRepository {
     }
 
     @Override
-    public String[] numbersByColorAndMileage(List<Car> cars, String colorToFind, String mileageToFind) {
-        List<String> numbers = new ArrayList<>();
-        for (Car car : cars) {
-            if (colorToFind.equals(car.getColor()) || Integer.parseInt(mileageToFind) >= car.getMileage()) {
-                String number = car.getNumber();
-                numbers.add(number);
-            }
-        }
-        return numbers.toArray(new String[0]);
+    public List<String> numbersByColorAndMileage(List<Car> cars, String colorToFind, String mileageToFind) {
+        return cars.stream()
+                .filter(x->x.getColor().equals(colorToFind) || x.getMileage() <= Integer.parseInt(mileageToFind))
+                .map(Car::getNumber)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public int distinctCarsByCost(List<Car> cars, int startCost, int endCost) {
-        return (int) cars.stream()
+    public long distinctCarsByCost(List<Car> cars, int startCost, int endCost) {
+        return  cars.stream()
                 .filter(car -> car.getCost() >= startCost && car.getCost() <= endCost)
                 .count();
     }
