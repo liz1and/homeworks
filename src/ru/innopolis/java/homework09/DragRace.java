@@ -5,4 +5,14 @@ public class DragRace extends Race {
         super(length, route, prize);
     }
 
+    @Override
+    public String toString() {
+        return "DragRace{" +
+                "length=" + super.getLength() +
+                ", route='" + super.getRoute()+ '\'' +
+                ", prize=" + super.getPrize() +
+                ", cars=" + super.getPrize() +
+                '}';
+    }
+
 }

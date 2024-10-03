@@ -1,5 +1,7 @@
 package ru.innopolis.java.homework09;
 
+import java.util.Objects;
+
 public class Car {
 
     private String brand; //марка
@@ -36,4 +38,29 @@ public class Car {
     public void setSuspension(int suspension) {this.suspension = suspension;}
     public void setDurability(int durability) {this.durability = durability;}
 
+    @Override
+    public String toString() {
+        return "Car{" +
+                "brand='" + brand + '\'' +
+                ", model='" + model + '\'' +
+                ", year=" + year +
+                ", power=" + power +
+                ", acceleration=" + acceleration +
+                ", suspension=" + suspension +
+                ", durability=" + durability +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Car car = (Car) o;
+        return year == car.year && power == car.power && acceleration == car.acceleration && suspension == car.suspension && durability == car.durability && Objects.equals(brand, car.brand) && Objects.equals(model, car.model);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(brand, model, year, power, acceleration, suspension, durability);
+    }
 }
